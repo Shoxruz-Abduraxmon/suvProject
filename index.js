@@ -9,6 +9,7 @@ dotenv.config();
 const loginRoutes = require('./routes/login');
 const registerRoutes = require('./routes/register');
 const homeRouter = require('./routes/home');
+const clientRouter = require('./routes/clients');
 
 const app = express();
 
@@ -22,10 +23,12 @@ app.set('views', 'views');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(loginRoutes);
 app.use(registerRoutes);
 app.use(homeRouter);
+app.use(clientRouter);
 
 
 const connectDb = async() => {
