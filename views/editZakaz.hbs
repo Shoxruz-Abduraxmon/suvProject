@@ -1,0 +1,12 @@
+<h5>Buyurtmani o'zgartirish</h5>
+<h1>{{title}}</h1>
+
+<form action="/updateZakaz/{{edit._id}}" method="post" >
+    <div class="order-form">
+            <input type="number" name="telefon" value="{{edit.telefon}}" class="form-control mb-2">   
+            <input type="text" name="ism" value="{{edit.ism}}" class="form-control mb-2">
+            <input type="number" name="miqdor" value="{{edit.miqdor}}" class="form-control mb-2">
+            <input type="text" name="lokatsiya" value="{{edit.lokatsiya}}" class="form-control mb-2">
+            <button class="btn btn-primary" type="submit">OK</button>
+    </div>
+</form>    

@@ -10,6 +10,7 @@ const loginRoutes = require('./routes/login');
 const registerRoutes = require('./routes/register');
 const homeRouter = require('./routes/home');
 const clientRouter = require('./routes/clients');
+const editZakazRouter = require('./routes/editZakaz');
 
 const app = express();
 
@@ -29,7 +30,7 @@ app.use(loginRoutes);
 app.use(registerRoutes);
 app.use(homeRouter);
 app.use(clientRouter);
-
+app.use(editZakazRouter);
 
 const connectDb = async() => {
     try{

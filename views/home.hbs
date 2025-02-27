@@ -35,7 +35,12 @@
                 <td><span class="badge bg-warning">Jarayonda</span></td>
                 <td>
                     <button class="btn btn-success btn-sm">Yetkazildi</button>
-                    <button class="btn btn-danger btn-sm">Bekor qilish</button>
+
+                        <a class="btn btn-danger btn-sm" href="/editZakaz/{{_id}}">
+                          
+                            O'zgartirish
+
+                            </a>
                 </td>
             </tr>
             {{/each}}
@@ -47,61 +52,16 @@
 
 <style>
     .table-wrapper {
-        max-height: 250px; /* Faqat 3 ta qator sig‘adigan balandlik */
-        overflow-y: hidden; /* Avval yashirib turish */
-        transition: max-height 0.5s ease-in-out; /* Animatsiya */
+        max-height: 250px; 
+        overflow-y: hidden; 
+        transition: max-height 0.5s ease-in-out; 
     }
 
     .table-wrapper:hover {
-        max-height: 600px; /* Hover qilinganda ochiladi */
-        overflow-y: auto; /* Skroll chiqadi */
+        max-height: 600px; 
+        overflow-y: auto; 
     }
 </style>
 
 
-{{!-- <script>
 
-    document.addEventListener("DOMContentLoaded", function () {
-    const telefonInput = document.querySelector('input[name="telefon"]');
-    const ismInput = document.querySelector('input[name="ism"]');
-    const miqdorInput = document.querySelector('input[name="miqdor"]');
-    const lokatsiyaInput = document.querySelector('input[name="lokatsiya"]');
-    const kuryerInput = document.querySelector('input[name="kuryer"]');
-
-    telefonInput.addEventListener("input", async function () {
-        const telefon = telefonInput.value.trim();
-        if (telefon.length >= 9) {
-            try {
-                const response = await fetch(`/get-order?telefon=${telefon}`);
-                const data = await response.json();
-
-                if (data.order) {
-                    ismInput.value = data.order.ism || '';
-                    miqdorInput.value = data.order.miqdor || '';
-                    lokatsiyaInput.value = data.order.lokatsiya || '';
-                    kuryerInput.value = data.order.kuryer || '';
-                } else {
-                    ismInput.value = '';
-                    miqdorInput.value = '';
-                    lokatsiyaInput.value = '';
-                    kuryerInput.value = '';
-                }
-            } catch (error) {
-                console.error('Ma’lumot olishda xatolik:', error);
-            }
-        }
-    });
-});
-
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const tableWrapper = document.querySelector(".table-wrapper");
-        const rows = document.querySelectorAll("#zakazList .zakaz-item");
-
-        if (rows.length > 3) {
-            tableWrapper.style.maxHeight = rows[0].offsetHeight * 3 + "px";
-        }
-    });
-</script> --}}
-
-<script src="/js/zakaz.js"></script>

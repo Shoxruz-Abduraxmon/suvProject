@@ -95,3 +95,7 @@ exports.postBuyurtma = async (req, res) => {
         res.status(500).send('Xatolik yuz berdi');
     }
 };
+
+
+
+

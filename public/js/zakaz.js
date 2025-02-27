@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     telefonInput.addEventListener("input", async function () {
         const telefon = telefonInput.value.trim();
-        if (telefon.length >= 9) { // Kamida 9 ta belgi kiritilganda so‘rov yuboriladi
+        if (telefon.length >= 9) { 
             try {
                 const response = await fetch(`/get-order?telefon=${telefon}`);
                 const data = await response.json();
@@ -23,3 +23,4 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
