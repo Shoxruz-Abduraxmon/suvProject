@@ -6,6 +6,7 @@ exports.getClients = async (req, res) => {
         const clients = await Client.find().lean();
         const now = new Date();
         const tenDaysAgo = new Date(now.setDate(now.getDate() - 10));
+        
 
         
         const clientsWithLastOrder = await Promise.all(clients.map(async (client) => {
@@ -15,14 +16,15 @@ exports.getClients = async (req, res) => {
 
             return {
                 ...client,
-                lastOrderDate: lastOrder && lastOrder.createdAt ? lastOrder.createdAt.toISOString().split('T')[0] : 'Zakaz yo‘q', // Undefined bo‘lsa xatolik bermaydi
+                lastOrderDate: lastOrder && lastOrder.createdAt ? lastOrder.createdAt.toISOString().split('T')[0] : 'Zakaz yoq', 
                 inactive: lastOrder && lastOrder.createdAt < tenDaysAgo 
             };
         }));
 
         res.render('clients', {
             title: 'Mijozlar Ro‘yxati',
-            clients: clientsWithLastOrder
+            clients: clientsWithLastOrder,
+            clientlarsoni: clients.length
         });
     } catch (e) {
         console.error('Mijozlarni olishda xatolik:', e);

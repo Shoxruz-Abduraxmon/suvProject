@@ -1,12 +1,74 @@
-<h5>Buyurtmani o'zgartirish</h5>
-<h1>{{title}}</h1>
+<div class="container mt-4">
+    <!-- 📝 Form sarlavhasi -->
+    <h3 class="text-center fw-bold mb-4 text-primary">
+        <i class="fas fa-edit"></i> Buyurtmani o‘zgartirish
+    </h3>
 
-<form action="/updateZakaz/{{edit._id}}" method="post" >
-    <div class="order-form">
-            <input type="number" name="telefon" value="{{edit.telefon}}" class="form-control mb-2">   
-            <input type="text" name="ism" value="{{edit.ism}}" class="form-control mb-2">
-            <input type="number" name="miqdor" value="{{edit.miqdor}}" class="form-control mb-2">
-            <input type="text" name="lokatsiya" value="{{edit.lokatsiya}}" class="form-control mb-2">
-            <button class="btn btn-primary" type="submit">OK</button>
+    <form action="/edit/{{edit._id}}" method="post" class="card shadow p-4 rounded-3">
+        
+        <!-- 📞 Telefon raqam -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">Telefon raqami</label>
+            <input type="number" name="telefon" value="{{edit.telefon}}" class="form-control" placeholder="Telefon kiriting" required>
+        </div>
+
+        <!-- 👤 Ism -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">Ism</label>
+            <input type="text" name="ism" value="{{edit.ism}}" class="form-control" placeholder="Ismingiz" required>
+        </div>
+
+        <!-- 🔢 Miqdor -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">Miqdor</label>
+            <input type="number" name="miqdor" value="{{edit.miqdor}}" class="form-control" placeholder="Miqdor kiriting" required>
+        </div>
+
+        <!-- 📍 Lokatsiya -->
+        <div class="mb-3">
+            <label class="form-label fw-bold"> Lokatsiya</label>
+            <input type="text" name="lokatsiya" value="{{edit.lokatsiya}}" class="form-control" placeholder="Manzilni kiriting" required>
+        </div>
+
+        <!-- 🔘 Tugmalar -->
+        <div class="d-flex justify-content-between mt-4">
+            <a href="/home" class="btn btn-outline-secondary px-4">⬅️ Bekor qilish</a>
+            <button class="btn btn-primary px-4">✅ Saqlash</button>
+        </div>
+
+    </form>
+</div>
+  
+
+
+
+
+<!-- 🗑 O‘chirish tugmasi -->
+<button class="btn btn-outline-danger fw-semibold" data-bs-toggle="modal" data-bs-target="#deleteModal">
+    🗑 O‘chirish
+</button>
+
+<!-- 🚨 O‘chirishni tasdiqlovchi modal (O‘rtaga joylangan) -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger fw-bold" id="deleteModalLabel">Diqqat!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Yopish"></button>
+            </div>
+            <div class="modal-body">
+                Rostan ham bu buyurtmani o‘chirmoqchimisiz? 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                <form method="post" action="/delite/{{edit._id}}">
+                    <button class="btn btn-danger">Ha, o‘chirish</button>
+                </form>
+            </div>
+        </div>
     </div>
-</form>    
+</div>
+
+
+
+
