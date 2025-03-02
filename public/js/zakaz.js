@@ -26,3 +26,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+function filterClients(days) {
+    let count = 0;
+    document.querySelectorAll(".client-row").forEach(row => {
+        row.style.display = "none";
+    });
+
+    if (days === 10) {
+        document.querySelectorAll(".inactive-10").forEach(row => {
+            row.style.display = "";
+            count++;
+        });
+        document.getElementById("filteredCount").innerText = `10+ kun ishlamagan mijozlar: ${count} ta`;
+    } else if (days === 20) {
+        document.querySelectorAll(".inactive-20").forEach(row => {
+            row.style.display = "";
+            count++;
+        });
+        document.getElementById("filteredCount").innerText = `20+ kun ishlamagan mijozlar: ${count} ta`;
+    }
+}
+
+function resetFilter() {
+    document.querySelectorAll(".client-row").forEach(row => {
+        row.style.display = "";
+    });
+    document.getElementById("filteredCount").innerText = "Barcha mijozlar";
+}
