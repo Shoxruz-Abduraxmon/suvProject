@@ -6,31 +6,26 @@
 
     <form action="/edit/{{edit._id}}" method="post" class="card shadow p-4 rounded-3">
         
-        <!-- 📞 Telefon raqam -->
         <div class="mb-3">
             <label class="form-label fw-bold">Telefon raqami</label>
             <input type="number" name="telefon" value="{{edit.telefon}}" class="form-control" placeholder="Telefon kiriting" required>
         </div>
 
-        <!-- 👤 Ism -->
         <div class="mb-3">
             <label class="form-label fw-bold">Ism</label>
             <input type="text" name="ism" value="{{edit.ism}}" class="form-control" placeholder="Ismingiz" required>
         </div>
 
-        <!-- 🔢 Miqdor -->
         <div class="mb-3">
             <label class="form-label fw-bold">Miqdor</label>
             <input type="number" name="miqdor" value="{{edit.miqdor}}" class="form-control" placeholder="Miqdor kiriting" required>
         </div>
 
-        <!-- 📍 Lokatsiya -->
         <div class="mb-3">
             <label class="form-label fw-bold"> Lokatsiya</label>
             <input type="text" name="lokatsiya" value="{{edit.lokatsiya}}" class="form-control" placeholder="Manzilni kiriting" required>
         </div>
 
-        <!-- 🔘 Tugmalar -->
         <div class="d-flex justify-content-between mt-4">
             <a href="/home" class="btn btn-outline-secondary px-4">⬅️ Bekor qilish</a>
             <button class="btn btn-primary px-4">✅ Saqlash</button>
@@ -43,12 +38,10 @@
 
 
 
-<!-- 🗑 O‘chirish tugmasi -->
 <button class="btn btn-outline-danger fw-semibold" data-bs-toggle="modal" data-bs-target="#deleteModal">
     🗑 O‘chirish
 </button>
 
-<!-- 🚨 O‘chirishni tasdiqlovchi modal (O‘rtaga joylangan) -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
