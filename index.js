@@ -13,6 +13,8 @@ const clientRouter = require('./routes/clients');
 const editZakazRouter = require('./routes/editZakaz');
 const kuryerRouter = require('./routes/kuryer');
 
+const bot = require('./bot/telegram');
+
 const app = express();
 
 const hbs = expHbs.create({
@@ -33,6 +35,14 @@ app.use(homeRouter);
 app.use(clientRouter);
 app.use(editZakazRouter);
 app.use(kuryerRouter);
+    
+
+bot.launch().then(() => {
+    console.log("Telegram bot ishga tushdi!");
+}).catch((error) => {
+    console.error("Botni ishga tushirishda xatolik:", error);
+});
+
 
 const connectDb = async() => {
     try{

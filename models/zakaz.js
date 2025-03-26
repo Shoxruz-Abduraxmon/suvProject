@@ -6,6 +6,6 @@ const zakazSchema = new Schema({
     miqdor: { type: String, required: true },
     lokatsiya: { type: String, required: true },
     kuryer: { type: String, required: true }
-}, { timestamps: true }); 
+}, { timestamps: true });
 
 module.exports = model('Zakaz', zakazSchema);
