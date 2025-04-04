@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const path = require('path');
 const expHbs = require('express-handlebars');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 dotenv.config();
 
@@ -36,6 +38,15 @@ app.use(clientRouter);
 app.use(editZakazRouter);
 app.use(kuryerRouter);
     
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({mongoUrl: process.env.mongoURI}),
+    cookie: {
+        maxAge: 1000*60*60*8
+    }
+}));
 
 bot.launch().then(() => {
     console.log("Telegram bot ishga tushdi!");

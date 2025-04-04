@@ -47,3 +47,12 @@ exports.postRegister = async (req, res) =>{
             res.status(404).send({mgs: 'Ulashda xatalik'})
         }
     }
+
+    exports.logout = (req, res) => {
+        req.session.destroy((err) => {
+            if (err) {
+                console.log('Logout xatoligi:', err);
+            }
+            res.redirect('/login');
+        });
+    };
