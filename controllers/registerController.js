@@ -1,58 +1,46 @@
-const path = require('path');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
 exports.getRegister = (req, res) => {
-    res.render('register')
-}
+    res.render('register', { title: "Register" });
+};
 
-exports.postRegister = async (req, res) =>{
-    try{
-            const {name, email, password, password2} = req.body;
-    
-            if(!name || !email || !password || !password2) {
-               return res.status(404).send({mgs: 'Barcha qatorlarni to`ldiring '});
-            }
-    
-            if(password.length < 5) {
-               return res.status(404).send({mgs: 'Parol kalmida 5 belgi bo`lishi kerak'});
-            }
-    
-            if(password !== password2) {
-               return res.status(404).send({mgs: 'Parol bir xil emas'});
-            }
-    
-            const borEmail = await User.findOne({email});
-    
-             if(borEmail) {
-              return  res.status(404).send({mgs: 'bu email oldin ro`yxatdan o`tgan'})
-            }
-    
-            const hashedPassword = await bcrypt.hash(password, 10);
-    
-            const newUser = new User({
-                name,
-                email, 
-                password: hashedPassword,
-            })
-    
-            await newUser.save();
-    
-    
-            res.render('login');
-            console.log("name: " + name, "email: "+ email, "password: " +password, "password2" + password2);
-        
-        }catch (e) {
-            console.log(e);
-            res.status(404).send({mgs: 'Ulashda xatalik'})
+exports.postRegister = async (req, res) => {
+    try {
+        const { name, email, password, password2 } = req.body;
+
+        if (!name || !email || !password || !password2) {
+            return res.status(400).send('Barcha qatorlarni to‘ldiring');
         }
-    }
 
-    exports.logout = (req, res) => {
-        req.session.destroy((err) => {
-            if (err) {
-                console.log('Logout xatoligi:', err);
-            }
-            res.redirect('/login');
+        if (password.length < 5) {
+            return res.status(400).send('Parol kamida 5 ta belgidan iborat bo‘lishi kerak');
+        }
+
+        if (password !== password2) {
+            return res.status(400).send('Parollar mos emas');
+        }
+
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).send('Bu email allaqachon ro‘yxatdan o‘tgan');
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = new User({
+            name,
+            email,
+            password: hashedPassword
         });
-    };
+
+        await newUser.save();
+
+        console.log(`Yangi foydalanuvchi: ${name} - ${email}`);
+        res.redirect('/login');
+        
+    } catch (error) {
+        console.error('postRegister xatosi:', error);
+        res.status(500).send('Ichki server xatoligi');
+    }
+};
