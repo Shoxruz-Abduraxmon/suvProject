@@ -1,0 +1,90 @@
+<h3 class="mt-5 fw-bold text-primary">📋 Buyurtmalar</h3>
+
+
+{{#each kuryerlar}}
+    <button class="btn btn-primary mt-2" data-bs-toggle="collapse" data-bs-target="#kuryer{{@index}}">
+        {{@key}} ({{this.zakazlar.length}})
+    </button>
+    <div id="kuryer{{@index}}" class="collapse mt-2">
+        <table class="table table-bordered text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Ism</th>
+                    <th>Miqdor</th>
+                    <th>Lokatsiya</th>
+                    <th>Holat</th>
+                    <th>Harakatlar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each this.zakazlar}}
+                <tr>
+                    <td>{{this.ism}}</td>
+                    <td>{{this.miqdor}}</td>
+                    <td>{{this.lokatsiya}}</td>
+                    <td><span class="badge bg-warning text-dark">Jarayonda</span></td>
+                    <td>
+                        <div class="d-flex gap-2 justify-content-center">
+                            <button class="btn btn-success btn-sm">✅ Yetkazildi</button>
+                            <a class="btn btn-danger btn-sm" href="/editZakaz/{{this._id}}">✏️ O'zgartirish</a>
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+{{/each}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{!-- {{#each kuryerlar}}
+<form method="post" action="/kuryerZakarGet">
+    <input type="hidden" name="kuryerId" value="{{this.id}}">
+    <button type="submit" class="btn btn-primary">
+        
+    </button>
+</form>
+{{/each}} --}}
+
+
+<div class="table-wrapper mt-3">
+    <table class="table table-bordered text-center">
+        <thead class="table-dark">
+            <tr>
+                <th>Ism</th>
+                <th>Miqdor</th>
+                <th>Lokatsiya</th>
+                <th>Holat</th>
+                <th>Harakatlar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each zakazlar}}
+            <tr>
+                <td>{{this.ism}}</td>
+                <td>{{this.miqdor}}</td>
+                <td>{{this.lokatsiya}}</td>
+                <td><span class="badge bg-warning text-dark">Jarayonda</span></td>
+                <td>
+                    <div class="d-flex gap-2 justify-content-center">
+                        <button class="btn btn-success btn-sm">✅ Yetkazildi</button>
+                        <a class="btn btn-danger btn-sm" href="/editZakaz/{{_id}}">✏️ O'zgartirish</a>
+                    </div>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,19 @@
+{
+  "sessions": [
+    {
+      "id": "1087573317:1087573317",
+      "data": {
+        "step": "ask_partial_amount",
+        "phone": "+998990075165",
+        "fullName": "Askarov Doniyor",
+        "location": {
+          "latitude": 39.816361,
+          "longitude": 64.444345
+        },
+        "waterQuantity": 10,
+        "cost": 50000,
+        "tulovturi": "Naqd"
+      }
+    }
+  ]
+}

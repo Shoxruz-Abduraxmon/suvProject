@@ -1,0 +1,46 @@
+<h2 class="mb-3">📋 Mijozlar Ro‘yxati</h2>
+
+<!-- Filtrlash tugmalari -->
+<div class="mb-3">
+    <button class="btn btn-outline-danger btn-sm" onclick="filterClients(10)">📅 10+ kun ishlamagan</button>
+    <button class="btn btn-outline-dark btn-sm" onclick="filterClients(20)">📆 20+ kun ishlamagan</button>
+    <button class="btn btn-outline-secondary btn-sm" onclick="resetFilter()">🔄 Hammasini ko‘rsatish</button>
+</div>
+
+<!-- Filtlangan mijozlar sonini ko‘rsatish -->
+<h5 class="mt-2">🧮 Natija: <span id="filteredCount">Barcha mijozlar</span></h5>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Ism</th>
+            <th>Telefon</th>
+            <th>Lokatsiya</th>
+            <th>Oxirgi Zakaz Sanasi</th>
+            <th>Holat</th>
+        </tr>
+    </thead>
+    <tbody id="clientsTable">
+        {{#each clients}}
+        <tr class="client-row {{#if inactive}}inactive-10{{/if}} {{#if isInactive20}}inactive-20{{/if}}">
+            <td>{{this.ism}}</td>
+            <td>{{this.telefon}}</td>
+            <td>{{this.lokatsiya}}</td>
+            <td>{{this.lastOrderDate}}</td>
+            <td>
+                {{#if isInactive20}}
+                    <span class="badge bg-dark">20+ kun ishlamagan</span>
+                {{else if inactive}}
+                    <span class="badge bg-danger">10+ kun ishlamagan</span>
+                {{else}}
+                    <span class="badge bg-success">Faol</span>
+                {{/if}}
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<h3>📊 Jami mijozlar soni: <span class="badge bg-info">{{clientlarsoni}}</span></h3>
+
+
