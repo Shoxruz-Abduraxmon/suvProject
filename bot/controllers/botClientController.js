@@ -247,7 +247,7 @@ exports.handleText = async (ctx) => {
         // Check if the user pressed 'Yangi Zakaz' or 'Ishni Yakunlash'
         if (text === "Yangi Zakaz") {
             ctx.session.step = "phone";
-            return ctx.reply("Ishni boshladik. Mijozning telefon raqamini kiriting (+ bilan boshlansin):");
+            return ctx.reply("Ishni boshladik. Mijozning telefon raqamini kiriting 931234567 tarzida 9 ta raqam kiriting");
         }
 
         if (text === "Ishni Yakunlash") {
@@ -256,30 +256,31 @@ exports.handleText = async (ctx) => {
 
         if (step === "phone") {
             const phoneNumber = text.trim();
-            if (!phoneNumber.startsWith("+") || phoneNumber.length < 10 || isNaN(phoneNumber.slice(1))) {
-                return ctx.reply("⚠️ Raqamni xatolik bilan yozdingiz! + bilan boshlab kiriting.");
+            if (phoneNumber.length !== 9 || isNaN(phoneNumber)) {
+                return ctx.reply("⚠️ Telefon raqamni xato kiritdingiz! 931234567 tarzida 9 ta raqam kiriting.");
             }
-
-            ctx.session.phone = phoneNumber;
+        
+            ctx.session.phone = "998" + phoneNumber; // 998 ni oldidan avtomatik qo‘shadi
             ctx.session.step = "check_client";
-
-            const existingClient = await Client.findOne({ telefon: phoneNumber });
-
+        
+            const existingClient = await Client.findOne({ telefon: ctx.session.phone });
+        
             if (existingClient) {
                 ctx.session.fullName = existingClient.ism;
                 ctx.session.clientId = existingClient._id;
                 ctx.session.step = "quantity";  // Skip full name and go straight to quantity.
-
+        
                 return ctx.reply(
                     `✅ Mijoz topildi!\n👤 Ismi: ${existingClient.ism}\n📞 Telefon: ${existingClient.telefon}\n\n💧 Qancha suv kerak?`,
                     Markup.removeKeyboard()
                 );
             }
-
-            // If the client is not found, move to "fullName" step
+        
+            // Agar client topilmasa
             ctx.session.step = "fullName";
             return ctx.reply("🔹 Yangi mijoz! To'liq ismini kiriting:");
         }
+        
 
         if (step === "fullName") {
             ctx.session.fullName = text;
