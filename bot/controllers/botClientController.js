@@ -320,6 +320,9 @@ exports.handleText = async (ctx) => {
             ctx.session.step = "upload_cheque";
             return ctx.reply("📸 Iltimos, chek rasmni yuboring.");
         }
+
+        
+
     } catch (error) {
         console.error("❌ Xatolik:", error);
         ctx.reply("❌ Ichki xatolik yuz berdi, keyinroq urinib ko‘ring.");
@@ -382,35 +385,49 @@ exports.handleChequeImage = async (ctx) => {
         const fileId = photo[photo.length - 1].file_id;
         ctx.session.rasm = fileId;
 
-        const order = new Order({
+        const orderData = {
             telefon: ctx.session.phone,
             ism: ctx.session.fullName,
             miqdor: ctx.session.waterQuantity,
-            lokatsiya: `${ctx.session.location.latitude},${ctx.session.location.longitude}`,
+            lokatsiya: ctx.session.location
+                ? `${ctx.session.location.latitude},${ctx.session.location.longitude}`
+                : "Lokatsiya yo'q",
             kuryer: "bot",
-            tulovturi: ctx.session.tulovturi,
-            tulovholati: ctx.session.tulovholati,
+            tulovturi: ctx.session.tulovturi || "Noma'lum",
+            tulovholati: ctx.session.tulovholati || "Noma'lum",
             rasm: fileId,
-            partialAmount: ctx.session.partialAmount // Store partial payment amount if exists
-        });
+        };
 
-        await order.save();
+        // optional fieldni faqat bo'lsa qo'shamiz
+        if (ctx.session.partialAmount) {
+            orderData.partialAmount = ctx.session.partialAmount;
+        }
 
-        ctx.reply("✅ Buyurtma saqlandi! Rahmat.");
-        ctx.session = { step: "phone" };
+        const order = new Order(orderData);
 
-        // Show the menu after order is completed
-        return ctx.reply(
-            "Yangi Zakaz yoki Chiqish uchun tanlang:",
-            Markup.keyboard([
-                [{ text: "Yangi Zakaz" }, { text: "Ishni Yakunlash" }]
-            ])
-            .resize()
-            .oneTime()
-        );
+        await order.save()
+            .then(() => {
+                ctx.reply("✅ Buyurtma muvaffaqiyatli saqlandi! Rahmat.");
+                ctx.session = { step: "phone" };
+
+                // Show the menu after order is completed
+                return ctx.reply(
+                    "Yangi Zakaz yoki Chiqish uchun tanlang:",
+                    Markup.keyboard([
+                        [{ text: "Yangi Zakaz" }, { text: "Ishni Yakunlash" }]
+                    ])
+                    .resize()
+                    .oneTime()
+                );
+            })
+            .catch((error) => {
+                console.error("❌ Buyurtmani bazaga saqlashda xatolik:", error);
+                ctx.reply("❌ Buyurtma saqlanmadi! Iltimos, yana bir bor urinib ko'ring.");
+            });
+
     } catch (e) {
-        console.error("❌ Rasmni saqlashda xatolik:", e);
-        ctx.reply("❌ Chekni saqlashda muammo yuz berdi.");
+        console.error("❌ handleChequeImage umumiy xatolik:", e);
+        ctx.reply("❌ Buyurtmani saqlashda umumiy xatolik yuz berdi.");
     }
 };
 

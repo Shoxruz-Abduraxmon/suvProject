@@ -56,10 +56,12 @@
 // module.exports = bot;
 
 const { Telegraf, session } = require("telegraf");
+const mongoose = require('mongoose');
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 // Import controller
 const botClientController = require("./controllers/botClientController");
+
 
 bot.use(session());
 

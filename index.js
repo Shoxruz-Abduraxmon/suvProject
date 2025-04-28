@@ -41,14 +41,32 @@ app.use(editZakazRouter);
 app.use(kuryerRouter);
 
 // Bot launch
-bot.launch().then(() => {
-    console.log("Telegram bot ishga tushdi!");
-}).catch((error) => {
-    console.error("Botni ishga tushirishda xatolik:", error);
-});
+// bot.launch().then(() => {
+//     console.log("Telegram bot ishga tushdi!");
+// }).catch((error) => {
+//     console.error("Botni ishga tushirishda xatolik:", error);
+// });
 
-// DB connect
-const connectDb = async () => {
+// // DB connect
+// const connectDb = async () => {
+//     try {
+//         mongoose.set('strictQuery', false);
+//         await mongoose.connect(process.env.mongoURI, {
+//             serverSelectionTimeoutMS: 5000
+//         });
+//         console.log('MongoDB connected');
+
+//         app.listen(process.env.PORT, () => {
+//             console.log('Server open localhost:' + process.env.PORT);
+//         });
+//     } catch (e) {
+//         console.log('connectDb da muammo: ' + e);
+//     }
+// }
+
+// connectDb();
+
+const start = async () => {
     try {
         mongoose.set('strictQuery', false);
         await mongoose.connect(process.env.mongoURI, {
@@ -56,12 +74,16 @@ const connectDb = async () => {
         });
         console.log('MongoDB connected');
 
+        await bot.launch(); 
+        console.log('Telegram bot ishga tushdi!');
+
         app.listen(process.env.PORT, () => {
             console.log('Server open localhost:' + process.env.PORT);
         });
-    } catch (e) {
-        console.log('connectDb da muammo: ' + e);
-    }
-}
 
-connectDb();
+    } catch (e) {
+        console.error('connectDb da muammo:', e);
+    }
+};
+
+start();  
